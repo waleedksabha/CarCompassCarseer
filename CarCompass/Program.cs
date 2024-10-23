@@ -1,7 +1,7 @@
 using Domain.Common;
 using Microsoft.Extensions.Configuration;
 using Services.Interfaces;
-using Services.Services;
+using Services.UnitOfWork;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +28,7 @@ if (app.Environment.IsDevelopment())
 
 #region SharedSettings 
 var configuration = builder.Configuration;
-SharedSettings.GetAllMakesUrl = configuration.GetSection("SharedSettings").GetValue<string>("GetAllMakesUrl");
+SharedSettings.CommonUrl = configuration.GetSection("SharedSettings").GetValue<string>("CommonUrl"); 
 SharedSettings.LogPath = configuration.GetSection("SharedSettings").GetValue<string>("LogPath");
 #endregion
 

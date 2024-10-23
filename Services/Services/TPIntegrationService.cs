@@ -1,4 +1,5 @@
 ﻿using Domain.Common;
+using Domain.Models;
 using Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -15,12 +16,29 @@ namespace Services.Services
         }
 
         #region Get All Makes TP
-        public async Task<ResponseResult<dynamic>> GetAllMakes(string format)
+        public async Task<ResponseResult<GetAllMakesModel>> GetAllMakes(CommonRequest searchObj)
         {
-            var URL = "getallmakes?format=" + format;
-            var result = await GetFrom<ResponseResult<dynamic>>(SharedSettings.GetAllMakesUrl, URL);
+            string URL = $"getallmakes?format={searchObj.format}";
+            var result = await GetFrom<ResponseResult<GetAllMakesModel>>(SharedSettings.CommonUrl, URL);
             return result;
+        }
+        #endregion
 
+        #region Get Vehicle Types For Make Id TP
+        public async Task<ResponseResult<TypesForMakeModel>> GetVehicleTypesForMakeId(CommonRequest searchObj)
+        { 
+            string URL = $"GetVehicleTypesForMakeId/{searchObj.makeId}/?format={searchObj.format}";
+            var result = await GetFrom<ResponseResult<TypesForMakeModel>>(SharedSettings.CommonUrl, URL);
+            return result;
+        }
+        #endregion
+
+        #region Get Models For Make Id Year TP
+        public async Task<ResponseResult<ModelsForMakeIdYearModel>> GetModelsForMakeIdYear(CommonRequest searchObj)
+        {
+            string URL = $"GetModelsForMakeIdYear/makeId/{searchObj.makeId}/modelyear/{searchObj.modelyear}?format={searchObj.format}";
+            var result = await GetFrom<ResponseResult<ModelsForMakeIdYearModel>>(SharedSettings.CommonUrl, URL);
+            return result;
         }
         #endregion
     }

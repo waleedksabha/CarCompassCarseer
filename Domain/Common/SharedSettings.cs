@@ -8,7 +8,7 @@ namespace Domain.Common
 {
     public class SharedSettings
     {
-        public static string GetAllMakesUrl { get; set; }
+        public static string CommonUrl { get; set; } 
         public static string LogPath { get; set; }
 
     }

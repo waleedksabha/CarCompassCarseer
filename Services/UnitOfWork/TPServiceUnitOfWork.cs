@@ -1,11 +1,12 @@
 ﻿using Services.Interfaces;
+using Services.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Services
+namespace Services.UnitOfWork
 {
     public class TPServiceUnitOfWork : ITPServiceUnitOfWork
     {
@@ -24,6 +25,5 @@ namespace Services.Services
             _client.Dispose();
             TPIntegrationService = null;
         }
-
     }
 }

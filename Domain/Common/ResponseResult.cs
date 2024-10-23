@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Domain.Common
 {
-    public class ResponseResult<T> : IResponseResult<T>
+    public class ResponseResult<T>
     {
         public long Count { get; set; } 
         public string Message { get; set; } 
         public string SearchCriteria { get; set; }
-        public T Results { get; set; }
-    }
+        public List<T> Results { get; set; }
+    } 
 }

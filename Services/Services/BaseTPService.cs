@@ -31,27 +31,19 @@ namespace Services.Services
             var obj = Activator.CreateInstance(typeof(T));
             try
             {
-                WriteLog(request + " : " + "start");
-                //if (!string.IsNullOrEmpty(authToken))
-                //{
-                //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
-                //}
+                WriteLog("Start : " + Environment.NewLine + request); 
                 var urirequest = new Uri(request);
                 try
-                {
-                    WriteLog("start url" + request);
+                { 
                     using (HttpResponseMessage response = await client.GetAsync(urirequest).ConfigureAwait(false))
-                    {
-                        WriteLog("END url" + request);
-
+                    { 
                         if (response.IsSuccessStatusCode)
-                        {
-                            WriteLog(request + " : " + "Begin Result");
+                        { 
                             using (HttpContent content = response.Content)
                             {
                                 string result = await content.ReadAsStringAsync();
                                 obj = JsonConvert.DeserializeObject<T>(result);
-                                WriteLog(request + " : " + "End Result");
+                                WriteLog("End Result : " + Environment.NewLine + result);
                             }
                         }
                     }
@@ -64,64 +56,12 @@ namespace Services.Services
             catch (Exception ex)
             {
                 WriteLog(request + "  " + ex.Message);
-            }
-            WriteLog(request + " : " + "END");
+            } 
             return (T)obj;
         }
-        #endregion
+        #endregion         
 
-        #region GetListFrom
-        public async Task<IEnumerable<T>> GetListFrom<T>(string baseAddress, string url)
-        {
-            string request = baseAddress + url;
-
-            WriteLog(request + " : " + "start");
-
-            List<T> list = new List<T>();
-            try
-            {
-                //if (!string.IsNullOrEmpty(authToken))
-                //{
-                //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authToken);
-                //}
-                var urirequest = new Uri(request);
-                WriteLog(request + " : " + "start using ");
-                try
-                {
-                    WriteLog("start url" + request);
-                    using (HttpResponseMessage response = await client.GetAsync(urirequest))
-                    {
-                        WriteLog("END url" + request);
-
-                        if (response.IsSuccessStatusCode)
-                        {
-                            WriteLog(request + " : " + "Begin Result");
-                            using (HttpContent content = response.Content)
-                            {
-                                string result = await content.ReadAsStringAsync().ConfigureAwait(false);
-                                list = JsonConvert.DeserializeObject<List<T>>(result);
-                                WriteLog(request + " : " + "result");
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    WriteLog(request + "  " + ex.Message);
-                }
-            }
-            catch (Exception ex)
-            {
-                WriteLog(request + "  " + ex.Message);
-            }
-            WriteLog(request + " : " + "END");
-
-            return list;
-        }
-        #endregion
-
-        #region WriteLog
-        [System.Runtime.CompilerServices.MethodImpl(MethodImplOptions.Synchronized)]
+        #region WriteLog 
         public void WriteLog(params string[] strLogs)
         {
             try
@@ -129,7 +69,6 @@ namespace Services.Services
                 string strPath = SharedSettings.LogPath;
                 if (strLogs[0].Contains("[SUBFOLDER]"))
                     strPath += strLogs[0].Replace("[SUBFOLDER]", "");
-
 
                 string[] arrPaths = new string[] { strPath };
                 int[][] FileCount = null;
@@ -181,10 +120,8 @@ namespace Services.Services
                     sw.Close();
                 }
             }
-
             catch (Exception ex)
-            {
-                string errmsg = ex.Message;
+            { 
             }
         }
         #endregion
